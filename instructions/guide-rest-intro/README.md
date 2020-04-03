@@ -1,26 +1,29 @@
-# Creating a RESTful web service
+# Building and deploying a RESTful web service on OpenShift 4.3
 
 ### What you will learn
 
-You will learn how to build and test a simple REST service with JAX-RS and JSON-B, which will expose the JVM's system properties. The REST service will respond to **GET** requests made to the **http://localhost:9080/LibertyProject/System/properties** URL.
+Red Hat OpenShift is a leading hybrid cloud, enterprise Kubernetes application platform. In this lab, you will learn how to build and deploy a simple REST service with JAX-RS and JSON-B on OpenShift 4.3. The REST service will respond to **GET** requests made to the /LibertyProject/System/properties REST endpoint.
 
 The service responds to a **GET** request with a JSON representation of the system properties, where each property is a field  in a JSON object like this:
 ```JSON
 {
-  "os.name":"Mac",
-  "java.version": "1.8"
+  ...
+  "user.timezone": "Etc/UTC",
+  "java.vm.specification.version": "11",
+  "os.name": "Linux",
+  "server.output.dir": "/opt/ol/wlp/output/defaultServer/",
+  ...
 }
 ```
 ### Introduction
 
-When you create a new REST application, the design of the API is important. The JAX-RS APIs can be used to create JSON-RPC, or XML-RPC APIs, but it wouldn't be a RESTful service. A good RESTful service is designed around the resources that are exposed, and on how to create, read, update, and delete the resources.
+When you create a new REST application, the design of the API is important. The JAX-RS APIs can be used to create JSON-RPC, or XML-RPC APIs, but it wouldn't be a RESTful service. A good RESTful service is designed around the resources that are exposed, and on how to create, read, update, and delete the resources. The service responds to **GET** requests to the **/System/properties** path. The **GET** request should return a **200 OK** response that contains all of the JVM's system properties.
 
-The service responds to **GET** requests to the **/System/properties** path. The **GET** request should return a **200 OK** response that contains all of the JVM's system properties.
+The platform where your application is deployed to is equally important as the design of your application/API. OpenShift provides a secure, scalable and universal way to build and deploy your application. Regardless of the infrastructure, OpenShift can run your application on private cloud, public cloud or physical machines. Although OpenShift offers multiple ways to build your application, you'll be building from your local files using binary build that matches close to a typical developer workflow. To learn more about OpenShift 4.3 build processes, refer to [this link](https://docs.openshift.com/container-platform/4.3/builds/understanding-image-builds.html). 
 
 # Getting Started
 
-As an example:
-If a terminal window does not open navigate:
+You should see a terminal running. In case a terminal window does not open, navigate:
 
 `Terminal -> New Terminal`
 
@@ -28,37 +31,15 @@ Check you are in the **home/project** folder:
 
 `pwd`
 
-The fastest way to work through this guide is to clone the Git repository and use the projects that are provided inside:
+The fastest way to work through this guide is to clone [this Git repository](https://github.com/dewan-ahmed/guide-rest-intro.git) and use the maven projects that are provided inside:
 
-`git clone https://github.com/openliberty/guide-rest-intro.git`
-`cd guide-rest-intro`
+The **finish** directory in the root of this guide contains the finished application. Due to limitation of time, we suggest using **finish** directory for this exercise. The **start** directory provides a skeleton of the finished project and you can follow the steps [in this guide](https://openliberty.io/guides/rest-intro.html) to add the missing pieces of the application yourself (at a later time and on your local environment).
 
-The **finish** directory in the root of this guide contains the finished application. Give it a try before you proceed.
-
-To try out the application, first go to the **finish** directory and run the following Maven  goal to build the application and deploy it to Open Liberty:
-
-`mvn liberty:run`
-
-Check out the service in another shell:
-
-`curl http://localhost:9080/LibertyProject/System/properties`
-
-After you are done checking out the application, stop the Open Liberty server by pressing **CTRL+C** in the shell session where you ran the server. Alternatively, you can run the **liberty:stop** goal  from the **finish** directory in another shell session:
-
-`mvn liberty:stop`
-
-# Creating a JAX-RS application
-
-Navigate to the **start** directory to begin.
-
-Start Open Liberty in development mode, which starts the Open Liberty server and listens 
-for file changes:
-
-`mvn liberty:dev`
+# Understanding a JAX-RS application
 
 JAX-RS has two key concepts for creating REST APIs. The most obvious one is the resource itself, which is modelled as a class. The second is a JAX-RS application, which groups all exposed resources under a common path. You can think of the JAX-RS application as a wrapper for all of your resources.
 
-Replace the `SystemApplication` class:
+Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**SystemApplication.java**
 
 > [File -> Open]src/main/java/io/openliberty/guides/rest/SystemApplication.java
 
@@ -120,6 +101,24 @@ JAX-RS supports a number of ways to marshal JSON. The JAX-RS 2.1 specification m
 The method body returns the result of **System.getProperties()** that is of type **java.util.Properties**. Since the method 
 is annotated with **@Produces(MediaType.APPLICATION_JSON)**, JAX-RS uses JSON-B to automatically convert the returned object
 to JSON data in the HTTP response.
+
+# Building and running the application locally
+
+To try out the application locally, first go to the **finish** directory and run the following Maven  goal to build the application and deploy it to Open Liberty:
+
+`mvn liberty:run`
+
+Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. To view the system properties, append "/LibertyProject/System/propertie" after the URL and you should be seeing a long list of parameters like below:
+
+{
+  ...
+  "user.timezone": "Etc/UTC",
+  "java.vm.specification.version": "11",
+  "os.name": "Linux",
+  "server.output.dir": "/opt/ol/wlp/output/defaultServer/",
+  ...
+}
+
 
 # Configuring the server
 
