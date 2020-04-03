@@ -7,12 +7,12 @@ Red Hat OpenShift is a leading hybrid cloud, enterprise Kubernetes application p
 The service responds to a **GET** request with a JSON representation of the system properties, where each property is a field  in a JSON object like this:
 ```JSON
 {
-  ...
+  
   "user.timezone": "Etc/UTC",
   "java.vm.specification.version": "11",
   "os.name": "Linux",
   "server.output.dir": "/opt/ol/wlp/output/defaultServer/",
-  ...
+  
 }
 ```
 ### Introduction
@@ -31,7 +31,11 @@ Check you are in the **home/project** folder:
 
 `pwd`
 
-The fastest way to work through this guide is to clone [this Git repository](https://github.com/dewan-ahmed/guide-rest-intro.git) and use the maven projects that are provided inside:
+The fastest way to work through this guide is to clone [this Git repository](https://github.com/dewan-ahmed/guide-rest-intro.git) and use the maven projects that are provided inside.
+
+```
+git clone https://github.com/dewan-ahmed/guide-rest-intro.git
+```
 
 The **finish** directory in the root of this guide contains the finished application. Due to limitation of time, we suggest using **finish** directory for this exercise. The **start** directory provides a skeleton of the finished project and you can follow the steps [in this guide](https://openliberty.io/guides/rest-intro.html) to add the missing pieces of the application yourself (at a later time and on your local environment).
 
@@ -87,6 +91,8 @@ The variables that are being used in the **server.xml** file are provided by the
 
 # Building and running the application locally
 
+(Assuming you have already cloned the repositoty and are under **guide-rest-intro** folder)
+
 To try out the application locally, first go to the **finish** directory and run the following Maven goal to build the application and deploy it to Open Liberty:
 
 `pwd` (this should show /home/project/guide-rest-intro/finish)
@@ -104,109 +110,28 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
   ...
 }
 
-## Building and running the application
+## Deploying the application on OpenShift
 
-The Open Liberty server was started in development mode at the beginning of the guide and all the 
-changes were automatically picked up.
+(Assuming you have already cloned the repositoty and are under **guide-rest-intro/finish** folder)
 
-Check out the service that you created at the
-http://localhost:9080/LibertyProject/System/properties[^] URL. 
-
-## Testing the service
-
-You can test this service manually by using the following command in another shell:
-`curl http://localhost:9080/LibertyProject/System/properties`
-
-Automated tests are a much better approach because they trigger a failure if a change introduces a bug. JUnit and the JAX-RS Client API provide a simple environment to test the application.
-
-You can write tests for the individual units of code outside of a running application server, or they can be written to call the application server directly. In this example, you will create a test that does the latter.
-
-Create the `EndpointIT` class
-
-> [File -> New File]src/test/java/it/io/openliberty/guides/rest/EndpointIT.java
-
-Add the following to the class: 
-
-```java
-package it.io.openliberty.guides.rest;
-
-import static org.junit.Assert.assertEquals;
-
-import java.util.Properties;
-
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-
-import org.junit.Test;
-
-public class EndpointIT {
-
-    private static final Jsonb jsonb = JsonbBuilder.create();
-
-    @Test
-    public void testGetProperties() {
-        String port = System.getProperty("http.port");
-        String context = System.getProperty("context.root");
-        String url = "http://localhost:" + port + "/" + context + "/";
-
-        Client client = ClientBuilder.newClient();
-
-        WebTarget target = client.target(url + "System/properties");
-        Response response = target.request().get();
-
-        assertEquals("Incorrect response code from " + url,
-                     Response.Status.OK.getStatusCode(), response.getStatus());
-
-        String json = response.readEntity(String.class);
-        Properties sysProps = jsonb.fromJson(json, Properties.class);
-
-        assertEquals("The system property for the local and remote JVM should match",
-                     System.getProperty("os.name"),
-                     sysProps.getProperty("os.name"));
-        response.close();
-    }
-}
+Step 1: Creating an OpenShift project
+```
+oc new-project think-quicklabs
 ```
 
-This test class has more lines of code than the resource implementation. This situation is common. The test method is indicated with the **@Test** annotation.
-
-The test code needs to know some information about the application to make requests. The server port and the application context root are key, and are dictated by the server configuration. While this information can be hardcoded, it is better to specify it in a single place like the Maven **pom.xml** file. Refer to the **pom.xml** file to see how the application information such as the **default.http.port**, **default.https.port** and **app.context.root** elements are provided in the file.
-
-These Maven properties are then passed to the Java test program as the **<systemPropertyVariables/>** element in the **pom.xml** file.
-
-Getting the values to create a representation of the URL is simple. The test class uses the **getProperty** method to get the application details.
-
-To call the JAX-RS service using the JAX-RS client, first create a **WebTarget** object by calling the **target** method that provides the URL. To cause the HTTP request to occur, the **request().get()** method is called on the **WebTarget** object. The **get** method call is a synchronous call that blocks until a response is received. This call returns a **Response** object, which can be inspected to determine whether the request was successful.
-
-The first thing to check is that a **200** response was received. The JUnit **assertEquals** method can be used for this check.
-
-Check the response body to ensure it returned the right information. Since the client and the server are running on the same machine, it is reasonable to expect that the system properties for the local and remote JVM would be the same. In this case, an **assertEquals** assertion is made so that the **os.name** system property for both JVMs is the same. You can write additional assertions to check for more values.
-
-### Running the tests
-
-Since you started Open Liberty in development mode at the start of the guide, press **enter/return** key to run the tests. You will see the following output:
-
-```source
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running it.io.openliberty.guides.rest.EndpointIT
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.884 sec - in it.io.openliberty.guides.rest.EndpointIT
-
-Results :
-
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+Step 2: Create a new binary build
+```
+oc new-build --name=rest-quicklab --binary --strategy=docker
 ```
 
-To see whether the tests detect a failure, add an assertion that you know fails, or change the existing
-assertion to a constant value that doesn't match the **os.name** system property.
+Step 3: Start the binary build using current directory as binary input for the build
+```
+oc start-build rest-quicklab --from-dir=.
+```
 
-When you are done checking out the service, exit development mode by typing **q** in the shell session where
-you ran the server and then pressing the **enter/return** key.
+Step 4: Observe the build via OpenShift Console
+
+
 
 # Summary
 
