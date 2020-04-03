@@ -41,52 +41,16 @@ JAX-RS has two key concepts for creating REST APIs. The most obvious one is the 
 
 Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**SystemApplication.java**
 
-> [File -> Open]src/main/java/io/openliberty/guides/rest/SystemApplication.java
-
-```java
-package io.openliberty.guides.rest;
-
-import javax.ws.rs.core.Application;
-import javax.ws.rs.ApplicationPath;
-
-@ApplicationPath("System")
-public class SystemApplication extends Application {
-
-}
-```
-
 The **SystemApplication** class extends the **Application** class, which in turn associates all JAX-RS resource classes in the WAR file with this JAX-RS application, making them available under the common path specified in the **SystemApplication** class. The **@ApplicationPath** annotation has a value that indicates the path within the WAR that the JAX-RS application accepts requests from.
 
-# Creating the JAX-RS resource
+The expectation is that when you repeat this lab yourself using the **start** directory, you'll be creating the SystemApplication class yourself. 
+
+# Understanding the JAX-RS resource
 
 In JAX-RS, a single class should represent a single resource, or a group of resources of the same type. In this application, a resource might be a system property, or a set of system properties. It is easy to have a single class handle multiple different resources, but keeping a clean separation between types of resources helps with maintainability in the long run.
 
-Create the `PropertiesResource` class.
-> [File -> New File]src/main/java/io/openliberty/guides/rest/PropertiesResource.java
+Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**PropertiesResource.java**
 
-Add the following:
-
-```java
-package io.openliberty.guides.rest;
-
-import java.util.Properties;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-@Path("properties")
-public class PropertiesResource {
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Properties getProperties() {
-        return System.getProperties();
-    }
-
-}
-```
 This resource class has quite a bit of code in it, so let's break it down into manageable chunks.
 
 The **@Path** annotation on the class indicates that this resource responds to the **properties** path in the JAX-RS application. The **@ApplicationPath** annotation in the **SystemApplication** class together with the **@Path** annotation in this class indicates that the resource is available at the **System/properties** path.
@@ -102,10 +66,30 @@ The method body returns the result of **System.getProperties()** that is of type
 is annotated with **@Produces(MediaType.APPLICATION_JSON)**, JAX-RS uses JSON-B to automatically convert the returned object
 to JSON data in the HTTP response.
 
+The expectation is that when you repeat this lab yourself using the **start** directory, you'll be creating the PropertiesResource class yourself. 
+
+
+# Understanding the server configuration
+
+To get the service running, the Liberty server needs to be correctly configured. 
+
+Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**liberty**/**config**/**server.xml**
+
+The configuration does the following actions:
+
+. Configures the server to enable JAX-RS. This is specified in the **featureManager** element.
+. Configures the server to resolve the HTTP port numbers from variables, which are then specified in the Maven **pom.xml** file. This is specified in the **<httpEndpoint/>** element. Variables use the **${variableName}** syntax. 
+. Configures the server to run the produced web application on a context root specified in the **pom.xml** file. This is specified in the **<webApplication/>** element.
+
+Take a look at the pom.xml file. Click on File-->Open-->**guide-rest-intro**-->**finish**-->**pom.xml**
+
+The variables that are being used in the **server.xml** file are provided by the properties set in the Maven **pom.xml** file. The properties must be formatted as **liberty.var.variableName**.
+
 # Building and running the application locally
 
-To try out the application locally, first go to the **finish** directory and run the following Maven  goal to build the application and deploy it to Open Liberty:
+To try out the application locally, first go to the **finish** directory and run the following Maven goal to build the application and deploy it to Open Liberty:
 
+`pwd` (this should show /home/project/guide-rest-intro/finish)
 `mvn liberty:run`
 
 Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. To view the system properties, append "/LibertyProject/System/propertie" after the URL and you should be seeing a long list of parameters like below:
@@ -118,37 +102,6 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
   "server.output.dir": "/opt/ol/wlp/output/defaultServer/",
   ...
 }
-
-
-# Configuring the server
-
-To get the service running, the Liberty server needs to be correctly configured. 
-
-Replace the server configuration file.
-> [File -> Open]src/main/liberty/config/server.xml
-
-```source
-<server description="Intro REST Guide Liberty server">
-  <featureManager>
-      <feature>jaxrs-2.1</feature>
-  </featureManager>
-
-  <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
-                id="defaultHttpEndpoint" host="*" />
-
-  <webApplication location="guide-rest-intro.war" contextRoot="${app.context.root}"/>
-</server>
-```
-The configuration does the following actions:
-
-. Configures the server to enable JAX-RS. This is specified in the **featureManager** element.
-. Configures the server to resolve the HTTP port numbers from variables, which are then specified in the Maven **pom.xml** file. This is specified in the **<httpEndpoint/>** element. Variables use the **${variableName}** syntax. 
-. Configures the server to run the produced web application on a context root specified in the **pom.xml** file. This is specified in the **<webApplication/>** element.
-
-Take a look at the **pom.xml** file. 
-> [File -> Open]pom.xml
-
-The variables that are being used in the **server.xml** file are provided by the properties set in the Maven **pom.xml** file. The properties must be formatted as **liberty.var.variableName**.
 
 ## Building and running the application
 
