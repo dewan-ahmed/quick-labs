@@ -90,6 +90,7 @@ The variables that are being used in the **server.xml** file are provided by the
 To try out the application locally, first go to the **finish** directory and run the following Maven goal to build the application and deploy it to Open Liberty:
 
 `pwd` (this should show /home/project/guide-rest-intro/finish)
+
 `mvn liberty:run`
 
 Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. To view the system properties, append "/LibertyProject/System/propertie" after the URL and you should be seeing a long list of parameters like below:
