@@ -99,7 +99,7 @@ To try out the application locally, first go to the **finish** directory and run
 
 `mvn liberty:run`
 
-Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. To view the system properties, append "/LibertyProject/System/propertie" after the URL and you should be seeing a long list of parameters like below:
+Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page (some images might not load properly due to the page being loaded via proxy). To view the system properties, append "/LibertyProject/System/properties" after the URL and you should be seeing a long list of parameters like below:
 
 {
   ...
