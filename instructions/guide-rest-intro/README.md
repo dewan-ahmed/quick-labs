@@ -1,4 +1,4 @@
-# Building and deploying a RESTful web service on OpenShift 4.3
+## Building and deploying a RESTful web service on OpenShift 4.3
 
 ### What you will learn
 
