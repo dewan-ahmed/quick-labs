@@ -152,6 +152,10 @@ Click on the OpenShift Console tab at the top. From the **Developer** perspectiv
 Step 8:
 
 Let's clean up the resources we just created. Click on the OpenShift Console tab at the top. From the **Administrator** perspective, click on **Home**-->**Projects** and find **think-quicklabs** project. Click on three vertical dots at the last column beside this project name and click "Delete Project". You will need to type the name of the project which you just created and the name has to match. If you followed the same naming convention, type "think-quicklab" and click "Delete".
+On your own OpenShift cluster, if you'd like to delete the app only and not the project, you can execute the following command:
+```
+oc delete all -l app=<name-of-app>
+```
 
 ### Summary
 
