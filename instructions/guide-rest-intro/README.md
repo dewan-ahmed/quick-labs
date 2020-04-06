@@ -131,10 +131,26 @@ oc start-build rest-quicklab --from-dir=.
 
 Step 4: Observe the build via OpenShift Console
 
+Click on the OpenShift Console tab at the top. From the **Administrator** perspective, esnure that you're on the right ptoject - **think-quciklabs**. Click on **Builds**-->**Builds** tab and then **rest-quicklab** build. Click on the **Logs** tab and ensure a "Push successful" message is displayed at the end. This means that your build image has been pushed to OpenShift internal image registry.
 
+Step 5: Create a new OpenShift app from the build
+```
+oc new-app rest-quicklab
+```
+This command creates OpenShift deploymentconfigs and services for your application.
+
+Step 6: Exposing the app by creating a route to your application
+```
+oc expose svc/rest-quicklab
+```
+This command ensures that your app is accessible from the internet by a public URL.
+
+Step 7: 
+
+Click on the OpenShift Console tab at the top. From the **Developer** perspective, esnure that you're on the right ptoject - **think-quciklabs** and click on **Topology** tab. This shows your deployed application on OpenShift. To access the application, click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. Append **/LibertyProject/System/properties** at the end of the address bar and you should see the system properties of the server this OpenLiberty application is running on. 
 
 # Summary
 
 ## Well Done
 
-Nice work! You developed a REST service in Open Liberty by using JAX-RS and JSON-B.
+Nice work! You have laerned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.3.
