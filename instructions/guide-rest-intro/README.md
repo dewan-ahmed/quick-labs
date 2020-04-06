@@ -21,7 +21,7 @@ When you create a new REST application, the design of the API is important. The 
 
 The platform where your application is deployed to is equally important as the design of your application/API. OpenShift provides a secure, scalable and universal way to build and deploy your application. Regardless of the infrastructure, OpenShift can run your application on private cloud, public cloud or physical machines. Although OpenShift offers multiple ways to build your application, you'll be building from your local files using binary build that matches close to a typical developer workflow. To learn more about OpenShift 4.3 build processes, refer to [this link](https://docs.openshift.com/container-platform/4.3/builds/understanding-image-builds.html). 
 
-# Getting Started
+### Getting Started
 
 You should see a terminal running. In case a terminal window does not open, navigate:
 
@@ -39,7 +39,7 @@ git clone https://github.com/dewan-ahmed/guide-rest-intro.git
 
 The **finish** directory in the root of this guide contains the finished application. Due to limitation of time, we suggest using **finish** directory for this exercise. The **start** directory provides a skeleton of the finished project and you can follow the steps [in this guide](https://openliberty.io/guides/rest-intro.html) to add the missing pieces of the application yourself (at a later time and on your local environment).
 
-# Understanding a JAX-RS application
+### Understanding a JAX-RS application
 
 JAX-RS has two key concepts for creating REST APIs. The most obvious one is the resource itself, which is modelled as a class. The second is a JAX-RS application, which groups all exposed resources under a common path. You can think of the JAX-RS application as a wrapper for all of your resources.
 
@@ -49,7 +49,7 @@ The **SystemApplication** class extends the **Application** class, which in turn
 
 The expectation is that when you repeat this lab yourself using the **start** directory, you'll be creating the SystemApplication class yourself. 
 
-# Understanding the JAX-RS resource
+### Understanding the JAX-RS resource
 
 In JAX-RS, a single class should represent a single resource, or a group of resources of the same type. In this application, a resource might be a system property, or a set of system properties. It is easy to have a single class handle multiple different resources, but keeping a clean separation between types of resources helps with maintainability in the long run.
 
@@ -73,7 +73,7 @@ to JSON data in the HTTP response.
 The expectation is that when you repeat this lab yourself using the **start** directory, you'll be creating the PropertiesResource class yourself. 
 
 
-# Understanding the server configuration
+### Understanding the server configuration
 
 To get the service running, the Liberty server needs to be correctly configured. 
 
@@ -89,7 +89,7 @@ Take a look at the pom.xml file. Click on File-->Open-->**guide-rest-intro**-->*
 
 The variables that are being used in the **server.xml** file are provided by the properties set in the Maven **pom.xml** file. The properties must be formatted as **liberty.var.variableName**.
 
-# Building and running the application locally
+### Building and running the application locally
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro** folder)
 
@@ -110,7 +110,7 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
   ...
 }
 
-## Deploying the application on OpenShift
+### Deploying the application on OpenShift
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro/finish** folder)
 
@@ -149,8 +149,12 @@ Step 7:
 
 Click on the OpenShift Console tab at the top. From the **Developer** perspective, esnure that you're on the right ptoject - **think-quciklabs** and click on **Topology** tab. This shows your deployed application on OpenShift. To access the application, click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. Append **/LibertyProject/System/properties** at the end of the address bar and you should see the system properties of the server this OpenLiberty application is running on. 
 
-# Summary
+Step 8:
 
-## Well Done
+Let's clean up the resources we just created. Click on the OpenShift Console tab at the top. From the **Administrator** perspective, click on **Home**-->**Projects** and find **think-quicklabs** project. Click on three vertical dots at the last column beside this project name and click "Delete Project". You will need to type the name of the project which you just created and the name has to match. If you followed the same naming convention, type "think-quicklab" and click "Delete".
+
+### Summary
+
+**Well Done**
 
 Nice work! You have laerned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.3.
