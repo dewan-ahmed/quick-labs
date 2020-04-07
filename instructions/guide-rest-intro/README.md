@@ -131,9 +131,23 @@ Step 3: Start the binary build using current directory as binary input for the b
 oc start-build rest-quicklab --from-dir=.
 ```
 
-Step 4: Observe the build via OpenShift Console
+Step 4: Observe the build
 
-Click on the OpenShift Console tab at the top. From the **Administrator** perspective, esnure that you're on the right ptoject - **think-quciklabs**. Click on **Builds**-->**Builds** tab and then **rest-quicklab** build. Click on the **Logs** tab and ensure a "Push successful" message is displayed at the end. This means that your build image has been pushed to OpenShift internal image registry.
+Execute the following command to view the available builds.
+```
+oc get builds
+```
+The output will be something like this:
+NAME              TYPE     FROM             STATUS    STARTED          DURATION
+rest-quicklab-1   Docker   Binary@f9c9544   Running   29 seconds ago   
+
+The following command will show you the logs for this build. Make sure to specify the build name you see from previous command.
+
+```
+oc logs -f build/rest-quicklab-1
+```
+
+This logs-stream should end with **Push successful** message and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
 
 Step 5: Create a new OpenShift app from the build
 ```
@@ -149,14 +163,20 @@ This command ensures that your app is accessible from the internet by a public U
 
 Step 7: 
 
-Click on the OpenShift Console tab at the top. From the **Developer** perspective, esnure that you're on the right ptoject - **think-quciklabs** and click on **Topology** tab. This shows your deployed application on OpenShift. To access the application, click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page. Append **/LibertyProject/System/properties** at the end of the address bar and you should see the system properties of the server this OpenLiberty application is running on. 
+```
+oc get routes
+```
+The above command outputs the publicly accessible route to your OpenLiberty application.
+
+Your app URL will be something like this: rest-quicklab-sn-labs-<your-userID>.sn-labs-user-sandbox-pr-a45631dc5778dc6371c67d206ba9ae5c-0000.tor01.containers.appdomain.cloud
+  
+Navigate to that URL and you should see the OpenLiberty page that gets generated from the base image. Append "/LibertyProject" after the URL and you should see a page with "Welcome to your Liberty Application" message. Finally, "/LibertyProject/System/properties" subURL should show you a list of system properties from the machine the OpenLiberty server is running on. For best viewing result, you can install a JSON viewer tool to your browser.
 
 Step 8:
 
-Let's clean up the resources we just created. Click on the OpenShift Console tab at the top. From the **Administrator** perspective, click on **Home**-->**Projects** and find **think-quicklabs** project. Click on three vertical dots at the last column beside this project name and click "Delete Project". You will need to type the name of the project which you just created and the name has to match. If you followed the same naming convention, type "think-quicklab" and click "Delete".
-On your own OpenShift cluster, if you'd like to delete the app only and not the project, you can execute the following command:
+Let's clean up the resources we just created. You can execute the following command:
 ```
-oc delete all -l app=<name-of-app>
+oc delete all -l app=rest-quicklab
 ```
 
 ### Summary
