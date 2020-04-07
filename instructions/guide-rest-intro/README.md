@@ -116,9 +116,9 @@ Remember to hit **ctrl+c** to stop the server when you're done.
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro/finish** folder)
 
-Step 1: Creating an OpenShift project
+Step 1: Generate the *.war file
 ```
-oc new-project think-quicklabs
+mvn package
 ```
 
 Step 2: Create a new binary build
