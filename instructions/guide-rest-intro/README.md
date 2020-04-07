@@ -174,9 +174,20 @@ Navigate to that URL and you should see the OpenLiberty page that gets generated
 
 Step 8:
 
-Let's clean up the resources we just created. You can execute the following command:
+Let's clean up the resources we just created. You can execute the following commands:
 ```
 oc delete all -l app=rest-quicklab
+
+oc delete builds rest-quicklab-1 
+
+oc delete buildconfigs rest-quicklab
+```
+Note: Your app, buildconfigs and build names might be different. The following commands will help you find the exact names for your builds, buildconfigs and imagestreams.
+
+```
+oc get builds
+oc get buildconfigs
+oc get imagestreams
 ```
 
 ### Summary
