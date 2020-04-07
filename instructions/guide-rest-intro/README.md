@@ -190,6 +190,21 @@ oc get buildconfigs
 oc get imagestreams
 ```
 
+Step 9: Troubleshooting (optional)
+
+If your application on OpenShift is not running as expected, you can run the following commands to view the logs of pods.
+
+```
+oc get pods
+```
+The above command should output four pods - one for the OpenShift console itseld, one application pod (e.g. rest-quicklab-1-25tgb), one build pod (e.g. rest-quicklab-1-build) and one deploy pod (rest-quicklab-1-deploy).
+
+The following command will display the logs from your application pod and the output should give you information on what might be wrong.
+```
+oc logs -f rest-quicklab-1-25tgb
+```
+Note: Name of your application pod might be different.
+
 ### Summary
 
 **Well Done**
