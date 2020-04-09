@@ -21,7 +21,7 @@ When you create a new REST application, the design of the API is important. The 
 
 The platform where your application is deployed to is equally important as the design of your application/API. OpenShift provides a secure, scalable and universal way to build and deploy your application. Regardless of the infrastructure, OpenShift can run your application on private cloud, public cloud or physical machines. Although OpenShift offers multiple ways to build your application, you'll be building from your local files using binary build that matches close to a typical developer workflow. To learn more about OpenShift 4.X build processes, refer to [this link](https://docs.openshift.com/container-platform/4.3/builds/understanding-image-builds.html). 
 
-## Getting Started
+# Getting Started
 
 You should see a terminal running. In case a terminal window does not open, navigate:
 
@@ -89,7 +89,7 @@ Take a look at the pom.xml file. Click on File-->Open-->**guide-rest-intro**-->*
 
 The variables that are being used in the **server.xml** file are provided by the properties set in the Maven **pom.xml** file. The properties must be formatted as **liberty.var.variableName**.
 
-## Building and running the application locally
+# Building and running the application locally
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro** folder)
 
@@ -112,7 +112,7 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
 
 Remember to hit **ctrl+c** to stop the server when you're done.
 
-## Deploying the application on OpenShift
+# Deploying the application on OpenShift
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro/finish** folder)
 
@@ -205,7 +205,7 @@ oc logs -f rest-quicklab-1-25tgb
 ```
 Note: Name of your application pod might be different.
 
-## Summary
+# Summary
 
 In this lab, you learned:
 
