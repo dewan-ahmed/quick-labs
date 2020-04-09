@@ -110,7 +110,7 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
   ...
 }
 
-Remember to hit **ctrl+c** to stop the server when you're done.
+Remember to hit **ctrl+c** in the terminal to stop the server when you're done.
 
 # Deploying the application on OpenShift
 
