@@ -1,8 +1,8 @@
-## Building and deploying a RESTful web service on OpenShift 4.3
+# Building and deploying a RESTful web service on OpenShift 4.X
 
-### What you will learn
+## What you will learn
 
-Red Hat OpenShift is a leading hybrid cloud, enterprise Kubernetes application platform. In this lab, you will learn how to build and deploy a simple REST service with JAX-RS and JSON-B on OpenShift 4.3. The REST service will respond to **GET** requests made to the /LibertyProject/System/properties REST endpoint.
+Red Hat OpenShift is a leading hybrid cloud, enterprise Kubernetes application platform. In this lab, you will learn how to build and deploy a simple REST service with JAX-RS and JSON-B on OpenShift 4.X. The REST service will respond to **GET** requests made to the /LibertyProject/System/properties REST endpoint.
 
 The service responds to a **GET** request with a JSON representation of the system properties, where each property is a field  in a JSON object like this:
 ```JSON
@@ -19,9 +19,9 @@ The service responds to a **GET** request with a JSON representation of the syst
 
 When you create a new REST application, the design of the API is important. The JAX-RS APIs can be used to create JSON-RPC, or XML-RPC APIs, but it wouldn't be a RESTful service. A good RESTful service is designed around the resources that are exposed, and on how to create, read, update, and delete the resources. The service responds to **GET** requests to the **/System/properties** path. The **GET** request should return a **200 OK** response that contains all of the JVM's system properties.
 
-The platform where your application is deployed to is equally important as the design of your application/API. OpenShift provides a secure, scalable and universal way to build and deploy your application. Regardless of the infrastructure, OpenShift can run your application on private cloud, public cloud or physical machines. Although OpenShift offers multiple ways to build your application, you'll be building from your local files using binary build that matches close to a typical developer workflow. To learn more about OpenShift 4.3 build processes, refer to [this link](https://docs.openshift.com/container-platform/4.3/builds/understanding-image-builds.html). 
+The platform where your application is deployed to is equally important as the design of your application/API. OpenShift provides a secure, scalable and universal way to build and deploy your application. Regardless of the infrastructure, OpenShift can run your application on private cloud, public cloud or physical machines. Although OpenShift offers multiple ways to build your application, you'll be building from your local files using binary build that matches close to a typical developer workflow. To learn more about OpenShift 4.X build processes, refer to [this link](https://docs.openshift.com/container-platform/4.3/builds/understanding-image-builds.html). 
 
-### Getting Started
+## Getting Started
 
 You should see a terminal running. In case a terminal window does not open, navigate:
 
@@ -89,7 +89,7 @@ Take a look at the pom.xml file. Click on File-->Open-->**guide-rest-intro**-->*
 
 The variables that are being used in the **server.xml** file are provided by the properties set in the Maven **pom.xml** file. The properties must be formatted as **liberty.var.variableName**.
 
-### Building and running the application locally
+## Building and running the application locally
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro** folder)
 
@@ -112,7 +112,7 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
 
 Remember to hit **ctrl+c** to stop the server when you're done.
 
-### Deploying the application on OpenShift
+## Deploying the application on OpenShift
 
 (Assuming you have already cloned the repositoty and are under **guide-rest-intro/finish** folder)
 
@@ -205,8 +205,14 @@ oc logs -f rest-quicklab-1-25tgb
 ```
 Note: Name of your application pod might be different.
 
-### Summary
+## Summary
+
+In this lab, you learned:
+
+1. How to build a Java/OpenLiberty REST service with JAX-RS and JSON-B
+2. How to build and run the app locally
+3. How to build and deploy the app on Red Hat OpenShift 4.X
 
 **Well Done**
 
-Nice work! You have laerned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.3.
+Nice work! You have laerned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.X.
