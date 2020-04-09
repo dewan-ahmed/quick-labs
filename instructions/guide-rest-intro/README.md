@@ -25,7 +25,7 @@ The platform where your application is deployed to is equally important as the d
 
 You should see a terminal running. In case a terminal window does not open, navigate:
 
-`Terminal -> New Terminal`
+**Terminal -> New Terminal**
 
 Check you are in the **home/project** folder:
 
@@ -43,7 +43,7 @@ The **finish** directory in the root of this guide contains the finished applica
 
 JAX-RS has two key concepts for creating REST APIs. The most obvious one is the resource itself, which is modelled as a class. The second is a JAX-RS application, which groups all exposed resources under a common path. You can think of the JAX-RS application as a wrapper for all of your resources.
 
-Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**SystemApplication.java**
+Click on **File**-->**Open**-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**SystemApplication.java**
 
 The **SystemApplication** class extends the **Application** class, which in turn associates all JAX-RS resource classes in the WAR file with this JAX-RS application, making them available under the common path specified in the **SystemApplication** class. The **@ApplicationPath** annotation has a value that indicates the path within the WAR that the JAX-RS application accepts requests from.
 
@@ -53,7 +53,7 @@ The expectation is that when you repeat this lab yourself using the **start** di
 
 In JAX-RS, a single class should represent a single resource, or a group of resources of the same type. In this application, a resource might be a system property, or a set of system properties. It is easy to have a single class handle multiple different resources, but keeping a clean separation between types of resources helps with maintainability in the long run.
 
-Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**PropertiesResource.java**
+Click on **File**-->**Open**-->**guide-rest-intro**-->**finish**-->**src**/**main**/**java**/**io**/**openliberty**/**guides**/**rest**/**PropertiesResource.java**
 
 This resource class has quite a bit of code in it, so let's break it down into manageable chunks.
 
@@ -77,7 +77,7 @@ The expectation is that when you repeat this lab yourself using the **start** di
 
 To get the service running, the Liberty server needs to be correctly configured. 
 
-Click on File-->Open-->**guide-rest-intro**-->**finish**-->**src**/**main**/**liberty**/**config**/**server.xml**
+Click on **File**-->**Open**-->**guide-rest-intro**-->**finish**-->**src**/**main**/**liberty**/**config**/**server.xml**
 
 The configuration does the following actions:
 
