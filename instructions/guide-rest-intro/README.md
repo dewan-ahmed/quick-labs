@@ -110,7 +110,7 @@ Click on the **Launch Application** tab at the top and enter "9080" for the port
   ...
 }
 
-Remember to hit **ctrl+c** in the terminal to stop the server when you're done.
+For better readability, install a plug-in for viewing JSON on your browser. Remember to hit **ctrl+c** in the terminal to stop the server when you're done.
 
 # Deploying the application on OpenShift
 
@@ -147,7 +147,7 @@ The following command will show you the logs for this build. Make sure to specif
 oc logs -f build/rest-quicklab-1
 ```
 
-This logs-stream should end with **Push successful** message and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
+This logs-stream should end with **Push successful** message (the build process might take upto a minute to complete) and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
 
 Step 5: Create a new OpenShift app from the build
 ```
