@@ -91,7 +91,7 @@ The variables that are being used in the **server.xml** file are provided by the
 
 # Building and running the application locally
 
-(Assuming you have already cloned the repositoty and are under **guide-rest-intro** folder)
+(Assuming you have already cloned the repository and are under **guide-rest-intro** folder)
 
 To try out the application locally, first go to the **finish** directory and run the following Maven goal to build the application and deploy it to Open Liberty:
 
@@ -138,16 +138,17 @@ Execute the following command to view the available builds.
 oc get builds
 ```
 The output will be something like this:
-NAME              TYPE     FROM             STATUS    STARTED          DURATION
-rest-quicklab-1   Docker   Binary@f9c9544   Running   29 seconds ago   
-
+| NAME  | TYPE  | FROM  | STATUS | STARTED  |  DURATION |
+|---|---|---|---|---|---|
+| rest-quicklab-1 | Docker  | Binary@f9c9544  | Running  | 29 seconds ago  |   |
+                                                   
 The following command will show you the logs for this build. Make sure to specify the build name you see from previous command.
 
 ```
 oc logs -f build/rest-quicklab-1
 ```
 
-This logs-stream should end with **Push successful** message (the build process might take upto a minute to complete) and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
+This logs-stream should end with **Push successful** message (the build process might take between two to three minutes to complete) and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
 
 Step 5: Create a new OpenShift app from the build
 ```
