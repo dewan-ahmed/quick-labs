@@ -154,7 +154,7 @@ Step 5: Create a new OpenShift app from the build
 ```
 oc new-app rest-quicklab
 ```
-This command creates OpenShift deploymentconfigs and services for your application.
+This command creates OpenShift DeploymentConfigs and services for your application.
 
 Step 6: Exposing the app by creating a route to your application
 ```
@@ -173,7 +173,22 @@ Your app URL will be something like this: rest-quicklab-sn-labs-<your-userID>.sn
   
 Navigate to that URL and you should see the OpenLiberty page that gets generated from the base image. Append "/LibertyProject" after the URL and you should see a page with "Welcome to your Liberty Application" message. Finally, "/LibertyProject/System/properties" subURL should show you a list of system properties from the machine the OpenLiberty server is running on. For best viewing result, you can install a JSON viewer tool to your browser.
 
-Step 8:
+Step 8: Troubleshooting (optional)
+
+If your application on OpenShift is not running as expected, you can run the following commands to view the logs of pods.
+
+```
+oc get pods
+```
+The above command should output four pods - one for the OpenShift console itself, one application pod (e.g. rest-quicklab-1-25tgb), one build pod (e.g. rest-quicklab-1-build) and one deploy pod (rest-quicklab-1-deploy).
+
+The following command will display the logs from your application pod and the output should give you information on what might be wrong.
+```
+oc logs -f rest-quicklab-1-25tgb
+```
+Note: Name of your application pod might be different.
+
+Step 9: Cleanup
 
 Let's clean up the resources we just created. You can execute the following commands:
 ```
@@ -191,20 +206,6 @@ oc get buildconfigs
 oc get imagestreams
 ```
 
-Step 9: Troubleshooting (optional)
-
-If your application on OpenShift is not running as expected, you can run the following commands to view the logs of pods.
-
-```
-oc get pods
-```
-The above command should output four pods - one for the OpenShift console itseld, one application pod (e.g. rest-quicklab-1-25tgb), one build pod (e.g. rest-quicklab-1-build) and one deploy pod (rest-quicklab-1-deploy).
-
-The following command will display the logs from your application pod and the output should give you information on what might be wrong.
-```
-oc logs -f rest-quicklab-1-25tgb
-```
-Note: Name of your application pod might be different.
 
 # Summary
 
@@ -216,4 +217,4 @@ In this lab, you learned:
 
 **Well Done**
 
-Nice work! You have laerned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.X.
+Nice work! You have learned how to develop a REST service in Open Liberty by using JAX-RS and JSON-B and then deployed the application on OpenShift 4.X.
