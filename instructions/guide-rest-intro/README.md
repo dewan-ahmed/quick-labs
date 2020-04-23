@@ -29,7 +29,10 @@ You should see a terminal running. In case a terminal window does not open, navi
 
 Check you are in the **home/project** folder:
 
-`pwd`
+```
+pwd
+```
+{: codeblock}
 
 The fastest way to work through this guide is to clone [this Git repository](https://github.com/dewan-ahmed/guide-rest-intro.git) and use the maven projects that are provided inside.
 
@@ -96,9 +99,17 @@ The variables that are being used in the **server.xml** file are provided by the
 
 To try out the application locally, first go to the **finish** directory and run the following Maven goal to build the application and deploy it to Open Liberty:
 
-`pwd` (this should show /home/project/guide-rest-intro/finish)
+```
+pwd
+```
+{: codeblock}
 
-`mvn liberty:run`
+This should show **/home/project/guide-rest-intro/finish** and now execute:
+
+```
+mvn liberty:run
+```
+{: codeblock}
 
 Wait till you see **The defaultServer server is ready to run a smarter planet** message in the logs. Click on the **Launch Application** tab at the top and enter "9080" for the port. This will take you to the OpenLiberty landing page (some images might not load properly due to the page being loaded via proxy). To view the system properties, append "/LibertyProject/System/properties" after the URL and you should be seeing a long list of parameters like below:
 
@@ -121,6 +132,7 @@ Step 1: Generate the *.war file
 ```
 mvn package
 ```
+{: codeblock}
 
 Step 2: Create a new binary build
 ```
@@ -131,6 +143,7 @@ Step 3: Start the binary build using current directory as binary input for the b
 ```
 oc start-build rest-quicklab --from-dir=.
 ```
+{: codeblock}
 
 Step 4: Observe the build
 
@@ -138,6 +151,8 @@ Execute the following command to view the available builds.
 ```
 oc get builds
 ```
+{: codeblock}
+
 The output will be something like this:
 | NAME  | TYPE  | FROM  | STATUS | STARTED  |  DURATION |
 |---|---|---|---|---|---|
@@ -148,6 +163,7 @@ The following command will show you the logs for this build. Make sure to specif
 ```
 oc logs -f build/rest-quicklab-1
 ```
+{: codeblock}
 
 This logs-stream should end with **Push successful** message (the build process might take between two to three minutes to complete) and this is the indication that the image was built and has been pushed to OpenShift internal image registry.
 
@@ -155,12 +171,16 @@ Step 5: Create a new OpenShift app from the build
 ```
 oc new-app rest-quicklab
 ```
+{: codeblock}
+
 This command creates OpenShift DeploymentConfigs and services for your application.
 
 Step 6: Exposing the app by creating a route to your application
 ```
 oc expose svc/rest-quicklab
 ```
+{: codeblock}
+
 This command ensures that your app is accessible from the internet by a public URL.
 
 Step 7: 
@@ -168,6 +188,8 @@ Step 7:
 ```
 oc get routes
 ```
+{: codeblock}
+
 The above command outputs the publicly accessible route to your OpenLiberty application.
 
 Your app URL will be something like this: rest-quicklab-sn-labs-<your-userID>.sn-labs-user-sandbox-pr-a45631dc5778dc6371c67d206ba9ae5c-0000.tor01.containers.appdomain.cloud
@@ -181,12 +203,16 @@ If your application on OpenShift is not running as expected, you can run the fol
 ```
 oc get pods
 ```
+{: codeblock}
+
 The above command should output four pods - one for the OpenShift console itself, one application pod (e.g. rest-quicklab-1-25tgb), one build pod (e.g. rest-quicklab-1-build) and one deploy pod (rest-quicklab-1-deploy).
 
 The following command will display the logs from your application pod and the output should give you information on what might be wrong.
 ```
 oc logs -f rest-quicklab-1-25tgb
 ```
+{: codeblock}
+
 Note: Name of your application pod might be different.
 
 Step 9: Cleanup
@@ -199,6 +225,8 @@ oc delete builds rest-quicklab-1
 
 oc delete buildconfigs rest-quicklab
 ```
+{: codeblock}
+
 Note: Your app, buildconfigs and build names might be different. The following commands will help you find the exact names for your builds, buildconfigs and imagestreams.
 
 ```
@@ -206,7 +234,7 @@ oc get builds
 oc get buildconfigs
 oc get imagestreams
 ```
-
+{: codeblock}
 
 # Summary
 
