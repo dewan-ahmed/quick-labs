@@ -138,6 +138,7 @@ Step 2: Create a new binary build
 ```
 oc new-build --name=rest-quicklab --binary --strategy=docker
 ```
+{: codeblock}
 
 Step 3: Start the binary build using current directory as binary input for the build
 ```
