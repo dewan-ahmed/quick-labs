@@ -36,7 +36,7 @@ The fastest way to work through this guide is to clone [this Git repository](htt
 ```
 git clone https://github.com/dewan-ahmed/guide-rest-intro.git
 ```
-
+{: codeblock}
 The **finish** directory in the root of this guide contains the finished application. Due to limitation of time, we suggest using **finish** directory for this exercise. The **start** directory provides a skeleton of the finished project and you can follow the steps [in this guide](https://openliberty.io/guides/rest-intro.html) to add the missing pieces of the application yourself (at a later time and on your local environment).
 
 ### Understanding a JAX-RS application
